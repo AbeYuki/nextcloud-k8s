@@ -70,7 +70,7 @@ spec:
         - name: MYSQL_HOST
           valueFrom:
             configMapKeyRef:
-              name: nextcloud-db
+              name: db
               key: MYSQL_HOST    
         ports:
         - containerPort: 80

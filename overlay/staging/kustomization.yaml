@@ -5,7 +5,7 @@ resources:
   - ../../base
   - avp-secret.yaml
 configMapGenerator:
-- name: nextcloud-db
+- name: db
   literals:
     - MYSQL_HOST=nextcloud-db-staging
 transformers:
