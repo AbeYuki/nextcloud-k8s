@@ -12,9 +12,12 @@ transformers:
   - transformer-label.yaml
   - transformer-suffixprefix.yaml
 images:
-  - name: nextcloud
+  - name: app
     newName: nextcloud
     newTag: "26.0.11-apache"
+  - name: db
+    newName: mariadb
+    newTag: "10.6"
 patches:
 ### storage ###
   - target:

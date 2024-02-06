@@ -24,7 +24,6 @@ images:
   - name: db
     newName: mariadb
     newTag: "10.6"
-
 patches:
 ### storage ###
   - target:
