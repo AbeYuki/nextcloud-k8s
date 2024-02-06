@@ -1,0 +1,96 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nextcloud
+resources:
+  - ../../base
+  - avp-secret.yaml
+configMapGenerator:
+- name: nextcloud-db
+  literals:
+    - MYSQL_HOST=nextcloud-db-prod
+transformers:
+  - transformer-label.yaml
+  - transformer-suffixprefix.yaml
+images:
+  - name: nextcloud
+    newName: nextcloud
+    newTag: "26.0.11-apache"
+patches:
+### storage ###
+  - target:
+      version: v1
+      kind: PersistentVolumeClaim
+      name: nextcloud
+    patch: |-
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: nextcloud
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: longhorn
+  - target:
+      version: v1
+      kind: PersistentVolumeClaim
+      name: nextcloud-db
+    patch: |-
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: nextcloud-db
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: longhorn
+### reesources ###
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: nextcloud
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: nextcloud
+      spec:
+        template:
+          spec:
+            containers:
+            - name: nextcloud
+              resources:
+                requests:
+                  cpu: "250m"
+                  memory: "250Mi"
+                limits:
+                  cpu: "500m"
+                  memory: "500Mi"
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: nextcloud-db
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: nextcloud-db
+      spec:
+        template:
+          spec:
+            containers:
+            - name: nextcloud-db
+              resources:
+                requests:
+                  cpu: "250m"
+                  memory: "250Mi"
+                limits:
+                  cpu: "500m"
+                  memory: "500Mi"

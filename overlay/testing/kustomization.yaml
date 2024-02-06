@@ -1,0 +1,106 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nextcloud-testing
+resources:
+  - ../../base
+secretGenerator:
+- name: db
+  literals:
+    - MYSQL_ROOT_PASSWORD=mariadb
+    - MYSQL_PASSWORD=mariadb
+    - MYSQL_DATABASE=mariadb
+    - MYSQL_USER=mariadb
+configMapGenerator:
+- name: db
+  literals:
+    - MYSQL_HOST=nextcloud-db-testing
+transformers:
+  - transformer-label.yaml
+  - transformer-suffixprefix.yaml
+images:
+  - name: app
+    newName: nextcloud
+    newTag: "26.0.11-apache"
+  - name: db
+    newName: mariadb
+    newTag: "10.6"
+
+patches:
+### storage ###
+  - target:
+      version: v1
+      kind: PersistentVolumeClaim
+      name: app
+    patch: |-
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: app
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: standard
+  - target:
+      version: v1
+      kind: PersistentVolumeClaim
+      name: db
+    patch: |-
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: db
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: standard
+### reesources ###
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: app
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: app
+      spec:
+        template:
+          spec:
+            containers:
+            - name: app
+              resources:
+                requests:
+                  cpu: "250m"
+                  memory: "250Mi"
+                limits:
+                  cpu: "500m"
+                  memory: "500Mi"
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: db
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: db
+      spec:
+        template:
+          spec:
+            containers:
+            - name: db
+              resources:
+                requests:
+                  cpu: "250m"
+                  memory: "250Mi"
+                limits:
+                  cpu: "500m"
+                  memory: "500Mi"
