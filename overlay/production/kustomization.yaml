@@ -7,7 +7,7 @@ resources:
 configMapGenerator:
 - name: db
   literals:
-    - MYSQL_HOST=nextcloud-db-staging
+    - MYSQL_HOST=nextcloud-db-production
 - name: redis
   literals:
     - REDIS_HOST=nextcloud-redis-production
