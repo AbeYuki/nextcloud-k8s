@@ -13,6 +13,9 @@ spec:
   selector:
     app.kubernetes.io/component: nextcloud-app
   type: ClusterIP
+  sessionAffinity: None
+  clusterIP: None
+  publishNotReadyAddresses: true
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
