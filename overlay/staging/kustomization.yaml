@@ -8,13 +8,28 @@ configMapGenerator:
 - name: db
   literals:
     - MYSQL_HOST=nextcloud-db-staging
+- name: redis
+  literals:
+    - REDIS_HOST=nextcloud-redis-staging
+- name: config-nginx
+  files:
+  - custom-nginx.conf=configmap-nginx.conf
 transformers:
   - transformer-label.yaml
   - transformer-suffixprefix.yaml
 images:
+  - name: web
+    newName: nginx
+    newTag: "1.25.3-alpine"
   - name: app
     newName: nextcloud
-    newTag: "26.0.11-apache"
+    newTag: "28.0.2-fpm-alpine"
+  - name: cron
+    newName: nextcloud
+    newTag: "28.0.2-fpm-alpine"
+  - name: redis
+    newName: redis
+    newTag: "7.2.4-alpine"
   - name: db
     newName: mariadb
     newTag: "10.5"
