@@ -8,13 +8,28 @@ configMapGenerator:
 - name: db
   literals:
     - MYSQL_HOST=nextcloud-db-staging
+- name: redis
+  literals:
+    - REDIS_HOST=nextcloud-redis-staging
+- name: config-nginx
+  files:
+  - custom-nginx.conf=configmap-nginx.conf
 transformers:
   - transformer-label.yaml
   - transformer-suffixprefix.yaml
 images:
+  - name: web
+    newName: nginx
+    newTag: "1.25.3-alpine"
   - name: app
     newName: nextcloud
-    newTag: "26.0.11-apache"
+    newTag: "28.0.2-fpm-alpine"
+  - name: cron
+    newName: nextcloud
+    newTag: "28.0.2-fpm-alpine"
+  - name: redis
+    newName: redis
+    newTag: "7.2.4-alpine"
   - name: db
     newName: mariadb
     newTag: "10.5"
@@ -23,15 +38,15 @@ patches:
   - target:
       version: v1
       kind: PersistentVolumeClaim
-      name: nextcloud
+      name: app
     patch: |-
       apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
-        name: nextcloud
+        name: app
       spec:
         accessModes:
-          - ReadWriteOnce
+          - ReadWriteMany
         resources:
           requests:
             storage: 1Gi
@@ -39,12 +54,12 @@ patches:
   - target:
       version: v1
       kind: PersistentVolumeClaim
-      name: nextcloud-db
+      name: db
     patch: |-
       apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
-        name: nextcloud-db
+        name: db
       spec:
         accessModes:
           - ReadWriteOnce
@@ -57,20 +72,20 @@ patches:
       group: apps
       version: v1
       kind: Deployment
-      name: nextcloud
+      name: web
     patch: |-
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: nextcloud
+        name: web
       spec:
         template:
           spec:
             containers:
-            - name: nextcloud
+            - name: web
               resources:
                 requests:
-                  cpu: "3500m"
+                  cpu: "350m"
                   memory: "500Mi"
                 limits:
                   cpu: "850m"
@@ -79,21 +94,87 @@ patches:
       group: apps
       version: v1
       kind: Deployment
-      name: nextcloud-db
+      name: app
     patch: |-
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: nextcloud-db
+        name: app
       spec:
         template:
           spec:
             containers:
-            - name: nextcloud-db
+            - name: app
+              resources:
+                requests:
+                  cpu: "350m"
+                  memory: "500Mi"
+                limits:
+                  cpu: "850m"
+                  memory: "1000Mi"
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: cron
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: cron
+      spec:
+        template:
+          spec:
+            containers:
+            - name: cron
+              resources:
+                requests:
+                  cpu: "150m"
+                  memory: "100Mi"
+                limits:
+                  cpu: "550m"
+                  memory: "300Mi"
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: redis
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: redis
+      spec:
+        template:
+          spec:
+            containers:
+            - name: redis
+              resources:
+                requests:
+                  cpu: "150m"
+                  memory: "300Mi"
+                limits:
+                  cpu: "550m"
+                  memory: "850Mi"
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: db
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: db
+      spec:
+        template:
+          spec:
+            containers:
+            - name: db
               resources:
                 requests:
                   cpu: "250m"
                   memory: "250Mi"
                 limits:
                   cpu: "500m"
-                  memory: "500Mi"
+                  memory: "750Mi"
