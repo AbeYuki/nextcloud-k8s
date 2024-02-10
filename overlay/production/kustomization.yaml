@@ -33,6 +33,9 @@ images:
   - name: db
     newName: mariadb
     newTag: "10.5"
+replicas:
+- name: web
+  count: 3
 patches:
 ### storage ###
   - target:
