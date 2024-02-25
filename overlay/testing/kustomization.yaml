@@ -13,26 +13,26 @@ secretGenerator:
 configMapGenerator:
 - name: db
   literals:
-    - MYSQL_HOST=nextcloud-db-testing
+    - MYSQL_HOST=nextcloud-db-testing:3306
 - name: redis
   literals:
     - REDIS_HOST=nextcloud-redis-testing
-- name: config-nginx
-  files:
-  - custom-nginx.conf=configmap-nginx.conf
+#- name: config-nginx
+#  files:
+#  - custom-nginx.conf=configmap-nginx.conf
 transformers:
   - transformer-label.yaml
   - transformer-suffixprefix.yaml
 images:
-  - name: web
-    newName: nginx
-    newTag: "1.25.3-alpine"
+  #- name: web
+  #  newName: nginx
+  #  newTag: "1.25.3-alpine"
   - name: app
     newName: nextcloud
-    newTag: "28.0.2-fpm-alpine"
+    newTag: "28.0.2-apache"
   - name: cron
     newName: nextcloud
-    newTag: "28.0.2-fpm-alpine"
+    newTag: "28.0.2-apache"
   - name: redis
     newName: redis
     newTag: "7.2.4-alpine"
@@ -73,29 +73,28 @@ patches:
           requests:
             storage: 1Gi
         storageClassName: standard
-### reesources ###
-  - target:
-      group: apps
-      version: v1
-      kind: Deployment
-      name: web
-    patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: web
-      spec:
-        template:
-          spec:
-            containers:
-            - name: web
-              resources:
-                requests:
-                  cpu: "350m"
-                  memory: "500Mi"
-                limits:
-                  cpu: "850m"
-                  memory: "1000Mi"
+  #- target:
+  #    group: apps
+  #    version: v1
+  #    kind: Deployment
+  #    name: web
+  #  patch: |-
+  #    apiVersion: apps/v1
+  #    kind: Deployment
+  #    metadata:
+  #      name: web
+  #    spec:
+  #      template:
+  #        spec:
+  #          containers:
+  #          - name: web
+  #            resources:
+  #              requests:
+  #                cpu: "350m"
+  #                memory: "500Mi"
+  #              limits:
+  #                cpu: "850m"
+  #                memory: "1000Mi"
   - target:
       group: apps
       version: v1
