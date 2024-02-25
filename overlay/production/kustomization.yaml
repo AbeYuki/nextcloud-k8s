@@ -49,7 +49,7 @@ patches:
           - ReadWriteMany
         resources:
           requests:
-            storage: 5Gi
+            storage: 7Gi
         storageClassName: longhorn
   - target:
       version: v1
