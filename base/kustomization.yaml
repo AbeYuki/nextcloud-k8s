@@ -1,8 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - nextcloud/deploy-nextcloud-web.yaml
-  - nextcloud/deploy-nextcloud-app.yaml
+#  - nextcloud/deploy-nextcloud-web.yaml
+#  - nextcloud/deploy-nextcloud-app.yaml
+  - nextcloud/deploy-nextcloud-webapp.yaml
   - nextcloud/deploy-nextcloud-cron.yaml
   - nextcloud/deploy-nextcloud-redis.yaml
   - nextcloud/deploy-nextcloud-db.yaml

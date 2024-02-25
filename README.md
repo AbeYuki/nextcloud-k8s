@@ -18,5 +18,5 @@ kubectl apply -k ./
 ```
 
 ```
-kubectl port-forward -n nextcloud-testing service/nextcloud-web-001 8080:8080
+kubectl port-forward -n nextcloud-testing service/nextcloud-app-testing 8080:80
 ```
