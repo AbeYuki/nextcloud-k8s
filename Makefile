@@ -1,9 +1,8 @@
-VERSION = 0.1.0
+VERSION = 1.0.0
 
 define RELEASE_NOTES
 ## 構成
-- nginx
-- nextcloud-fpm
+- nextcloud-apache
 - mariadb
 - redis
 - cron
