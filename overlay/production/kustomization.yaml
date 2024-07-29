@@ -35,7 +35,7 @@ images:
     newTag: "10.5"
 replicas:
 - name: app
-  count: 2
+  count: 1
 patches:
 ### storage ###
   - target:
