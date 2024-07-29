@@ -35,7 +35,7 @@ images:
     newTag: "10.5"
 replicas:
 - name: app
-  count: 1
+  count: 3
 patches:
 ### storage ###
   - target:
@@ -113,8 +113,8 @@ patches:
                   cpu: "350m"
                   memory: "500Mi"
                 limits:
-                  cpu: "850m"
-                  memory: "1000Mi"
+                  cpu: "1300m"
+                  memory: "1500Mi"
   - target:
       group: apps
       version: v1
