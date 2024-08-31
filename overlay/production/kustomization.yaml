@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: nextcloud
 resources:
   - ../../base/nextcloud
-  - ../../base/nectcloud-minio
+  - ../../base/nextcloud-minio
   - avp-secret.yaml
 configMapGenerator:
 - name: db
