@@ -205,7 +205,7 @@ patches:
       group: apps
       version: v1
       kind: Deployment
-      name: db
+      name: minio
     patch: |-
       apiVersion: apps/v1
       kind: Deployment
