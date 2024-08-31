@@ -1,7 +1,7 @@
 resources:
-  - deploy-nextcloud-app.yaml
+#  - deploy-nextcloud-app.yaml
   - deploy-nextcloud-cron.yaml
   - deploy-nextcloud-db.yaml
   - deploy-nextcloud-redis.yaml
 #  - deploy-nextcloud-web.yaml
-#  - deploy-nextcloud-webapp.yaml
+  - deploy-nextcloud-webapp.yaml
