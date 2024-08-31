@@ -1,0 +1,2 @@
+resources:
+  - deploy-nextcloud-minio.yaml

@@ -2,7 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: nextcloud
 resources:
-  - ../../base
+  - ../../base/nextcloud
+  - ../../base/nectcloud-minio
   - avp-secret.yaml
 configMapGenerator:
 - name: db
@@ -33,6 +34,9 @@ images:
   - name: db
     newName: mariadb
     newTag: "10.5"
+  - name: minio
+    newName: minio/minio
+    newTag: "RELEASE.2024-05-28T17-19-04Z"
 replicas:
 - name: app
   count: 1
@@ -70,6 +74,22 @@ patches:
           requests:
             storage: 5Gi
         storageClassName: longhorn
+  - target:
+      version: v1
+      kind: PersistentVolumeClaim
+      name: minio
+    patch: |-
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: minio
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 30Gi
+        storageClassName: nfs
 ### reesources ###
   - target:
       group: apps
