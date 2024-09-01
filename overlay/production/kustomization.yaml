@@ -88,7 +88,7 @@ patches:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 30Gi
+            storage: 50Gi
         storageClassName: nfs
 ### reesources ###
   - target:
