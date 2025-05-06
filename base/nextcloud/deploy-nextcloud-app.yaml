@@ -82,7 +82,13 @@ spec:
         volumeMounts:
         - name: app
           mountPath: /var/www/html
+        - name: config-volume
+          mountPath: /var/www/html/config/config.php
+          subPath: config.php
       volumes:
       - name: app
         persistentVolumeClaim:
           claimName: app
+      - name: config-volume
+        configMap:
+          name: nextcloud-config
