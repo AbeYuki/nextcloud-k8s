@@ -5,6 +5,7 @@ resources:
   - ../../base/nextcloud
   - ../../base/nextcloud-minio
   - avp-secret.yaml
+  - nextcloud-config.yaml
 configMapGenerator:
 - name: db
   literals:
