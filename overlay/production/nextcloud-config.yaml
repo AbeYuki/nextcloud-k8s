@@ -10,8 +10,8 @@ data:
       'overwrite.cli.url' => 'https://nextcloud.aimhighergg.com',
       'overwritehost' => 'nextcloud.aimhighergg.com',
       'overwriteprotocol' => 'https',
-      'trusted_proxies' =>
-      array (
-        0 => '10.0.0.0/8',
-      ),
+      'trusted_proxies' => [
+        '10.0.0.0/8',
+        '192.168.0.0/16'
+      ],
     );
