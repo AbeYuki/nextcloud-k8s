@@ -25,10 +25,10 @@ images:
   #  newTag: "1.25.3-alpine"
   - name: app
     newName: nextcloud
-    newTag: "31.0.4-apache"
+    newTag: "31.0.6-apache"
   - name: cron
     newName: nextcloud
-    newTag: "31.0.4-apache"
+    newTag: "31.0.6-apache"
   - name: redis
     newName: redis
     newTag: "7.2.4-alpine"
