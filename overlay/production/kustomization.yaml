@@ -58,7 +58,7 @@ patches:
         resources:
           requests:
             storage: 50Gi
-        storageClassName: longhorn-replica-2
+        storageClassName: nfs-g9-enp4s0
   - target:
       version: v1
       kind: PersistentVolumeClaim
