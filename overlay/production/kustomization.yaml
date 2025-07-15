@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: nextcloud
 resources:
   - ../../base/nextcloud
-  - ../../base/nextcloud-minio
+  #- ../../base/nextcloud-minio
   - avp-secret.yaml
   - nextcloud-config.yaml
 configMapGenerator:
@@ -35,9 +35,9 @@ images:
   - name: db
     newName: mariadb
     newTag: "10.5"
-  - name: minio
-    newName: minio/minio
-    newTag: "RELEASE.2024-05-28T17-19-04Z"
+  #- name: minio
+  #  newName: minio/minio
+  #  newTag: "RELEASE.2024-05-28T17-19-04Z"
 replicas:
 - name: app
   count: 1
@@ -74,23 +74,23 @@ patches:
         resources:
           requests:
             storage: 5Gi
-        storageClassName: longhorn-replica-2
-  - target:
-      version: v1
-      kind: PersistentVolumeClaim
-      name: minio
-    patch: |-
-      apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
-        name: minio
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 50Gi
-        storageClassName: nfs
+        storageClassName: nfs-g9-enp4s0
+  #- target:
+  #    version: v1
+  #    kind: PersistentVolumeClaim
+  #    name: minio
+  #  patch: |-
+  #    apiVersion: v1
+  #    kind: PersistentVolumeClaim
+  #    metadata:
+  #      name: minio
+  #    spec:
+  #      accessModes:
+  #        - ReadWriteOnce
+  #      resources:
+  #        requests:
+  #          storage: 50Gi
+  #      storageClassName: nfs
 ### reesources ###
   - target:
       group: apps
@@ -202,26 +202,26 @@ patches:
                 limits:
                   cpu: "500m"
                   memory: "850Mi"
-  - target:
-      group: apps
-      version: v1
-      kind: Deployment
-      name: minio
-    patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: minio
-      spec:
-        template:
-          spec:
-            containers:
-            - name: minio
-              image: minio
-              resources:
-                requests:
-                  memory: "200Mi"
-                  cpu: "200m"
-                limits:
-                  memory: "4Gi"
-                  cpu: "2000m"
+  #- target:
+  #    group: apps
+  #    version: v1
+  #    kind: Deployment
+  #    name: minio
+  #  patch: |-
+  #    apiVersion: apps/v1
+  #    kind: Deployment
+  #    metadata:
+  #      name: minio
+  #    spec:
+  #      template:
+  #        spec:
+  #          containers:
+  #          - name: minio
+  #            image: minio
+  #            resources:
+  #              requests:
+  #                memory: "200Mi"
+  #                cpu: "200m"
+  #              limits:
+  #                memory: "4Gi"
+  #                cpu: "2000m"
