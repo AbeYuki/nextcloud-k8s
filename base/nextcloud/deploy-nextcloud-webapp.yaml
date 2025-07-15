@@ -87,9 +87,6 @@ spec:
           subPath: proxy-config.php
       securityContext:
         fsGroup: 33
-        runAsUser: 33
-        runAsGroup: 33
-        runAsNonRoot: true
       volumes:
       - name: app
         persistentVolumeClaim:
