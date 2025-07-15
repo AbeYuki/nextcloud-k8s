@@ -81,7 +81,7 @@ spec:
         - containerPort: 9000
         volumeMounts:
         - name: app
-          mountPath: /var/www/html
+          mountPath: /var/www/html/data
         - name: config-volume
           mountPath: /var/www/html/config/config.php
           subPath: config.php
