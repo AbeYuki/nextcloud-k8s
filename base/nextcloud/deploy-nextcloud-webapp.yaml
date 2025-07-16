@@ -17,22 +17,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: config-volume
-  labels:
-    app.kubernetes.io/component: nextcloud-webapp
-    app.kubernetes.io/name: nextcloud
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: nfs-g9-enp4s0
-  volumeMode: Filesystem
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
   name: app
   labels:
     app.kubernetes.io/component: nextcloud-webapp
