@@ -97,7 +97,7 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: app
-          mountPath: /var/www/html/data
+          mountPath: /var/www/html
         - name: config-volume
           mountPath: /var/www/html/config
       securityContext:
