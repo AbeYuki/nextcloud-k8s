@@ -64,6 +64,13 @@ spec:
         app.kubernetes.io/component: nextcloud-webapp
         app.kubernetes.io/name: nextcloud
     spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 33:33 /var/www/html/config"]
+          volumeMounts:
+            - name: cron
+              mountPath: /var/www/html
       containers:
       - name: app
         image: app
