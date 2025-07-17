@@ -23,6 +23,8 @@ spec:
         volumeMounts:
         - name: cron
           mountPath: /var/www/html
+      securityContext:
+        fsGroup: 33
       volumes:
       - name: cron
         persistentVolumeClaim:
