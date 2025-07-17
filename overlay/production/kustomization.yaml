@@ -58,7 +58,7 @@ patches:
         resources:
           requests:
             storage: 50Gi
-        storageClassName: nfs-g9-enp4s0
+        storageClassName: nfs-g9-enp4s0-rwx
   - target:
       version: v1
       kind: PersistentVolumeClaim
@@ -74,7 +74,7 @@ patches:
         resources:
           requests:
             storage: 5Gi
-        storageClassName: nfs-g9-enp4s0
+        storageClassName: nfs-g9-enp4s0-rwx
   #- target:
   #    version: v1
   #    kind: PersistentVolumeClaim
