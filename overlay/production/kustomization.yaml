@@ -74,7 +74,7 @@ patches:
         resources:
           requests:
             storage: 5Gi
-        storageClassName: nfs-g9-enp4s0-rwx
+        storageClassName: nfs-g9-enp4s0-rwo
   #- target:
   #    version: v1
   #    kind: PersistentVolumeClaim
