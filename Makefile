@@ -21,3 +21,8 @@ release: tag
 pre-release: tag
 	echo "$$RELEASE_NOTES" | gh release create -p $(VERSION) -t "$(VERSION)" -F -
 
+deploy:login
+	argocd app sync nextcloud
+
+login:
+	argocd login argocd.aimhighergg.com --grpc-web
