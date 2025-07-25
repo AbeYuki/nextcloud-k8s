@@ -25,10 +25,10 @@ images:
   #  newTag: "1.25.3-alpine"
   - name: app
     newName: nextcloud
-    newTag: "31.0.6-apache"
+    newTag: "31.0.7-apache"
   - name: cron
     newName: nextcloud
-    newTag: "31.0.6-apache"
+    newTag: "31.0.7-apache"
   - name: redis
     newName: redis
     newTag: "7.2.4-alpine"
@@ -40,7 +40,7 @@ images:
   #  newTag: "RELEASE.2024-05-28T17-19-04Z"
 replicas:
 - name: app
-  count: 2
+  count: 1
 patches:
 ### storage ###
   - target:
