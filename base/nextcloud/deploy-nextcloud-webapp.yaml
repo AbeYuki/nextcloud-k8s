@@ -82,9 +82,16 @@ spec:
         volumeMounts:
         - name: app
           mountPath: /var/www/html
+        - name: apache-extra-config
+          mountPath: /etc/apache2/conf-enabled/nextcloud-video.conf
+          subPath: nextcloud-video.conf
+          readOnly: true
       securityContext:
         fsGroup: 33
       volumes:
       - name: app
         persistentVolumeClaim:
           claimName: app
+      - name: apache-extra-config
+        configMap:
+          name: nextcloud-apache-extra-config
